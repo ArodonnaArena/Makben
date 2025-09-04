@@ -5,12 +5,20 @@ import { useEffect, useState } from 'react'
 
 // Particle component
 const Particle = ({ delay }: { delay: number }) => {
+  const [dimensions, setDimensions] = useState({ width: 1200, height: 800 })
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      setDimensions({ width: window.innerWidth, height: window.innerHeight })
+    }
+  }, [])
+
   return (
     <motion.div
       className="absolute w-1 h-1 bg-primary-400 rounded-full opacity-60"
       initial={{ 
-        x: Math.random() * window.innerWidth,
-        y: window.innerHeight + 10,
+        x: Math.random() * dimensions.width,
+        y: dimensions.height + 10,
         scale: 0
       }}
       animate={{
@@ -55,11 +63,13 @@ const FloatingOrb = ({ size, color, duration, delay }: {
 
 export function Hero() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
+  const [isClient, setIsClient] = useState(false)
   const { scrollY } = useScroll()
   const y = useTransform(scrollY, [0, 500], [0, 150])
   const opacity = useTransform(scrollY, [0, 300], [1, 0])
 
   useEffect(() => {
+    setIsClient(true)
     const handleMouseMove = (e: MouseEvent) => {
       setMousePosition({ x: e.clientX, y: e.clientY })
     }
@@ -78,29 +88,33 @@ export function Hero() {
       <FloatingOrb size="w-32 h-32" color="bg-accent-500" duration={10} delay={4} />
       
       {/* Particles */}
-      <div className="particles">
-        {Array.from({ length: 50 }).map((_, i) => (
-          <Particle key={i} delay={i * 0.1} />
-        ))}
-      </div>
+      {isClient && (
+        <div className="particles">
+          {Array.from({ length: 50 }).map((_, i) => (
+            <Particle key={i} delay={i * 0.1} />
+          ))}
+        </div>
+      )}
       
       {/* Mouse follower effect */}
-      <motion.div
-        className="fixed w-96 h-96 pointer-events-none z-10"
-        style={{
-          background: 'radial-gradient(circle, rgba(59, 130, 246, 0.1) 0%, transparent 70%)',
-          left: mousePosition.x - 192,
-          top: mousePosition.y - 192,
-        }}
-        animate={{
-          scale: [1, 1.2, 1],
-        }}
-        transition={{
-          duration: 2,
-          repeat: Infinity,
-          ease: "easeInOut"
-        }}
-      />
+      {isClient && (
+        <motion.div
+          className="fixed w-96 h-96 pointer-events-none z-10"
+          style={{
+            background: 'radial-gradient(circle, rgba(59, 130, 246, 0.1) 0%, transparent 70%)',
+            left: mousePosition.x - 192,
+            top: mousePosition.y - 192,
+          }}
+          animate={{
+            scale: [1, 1.2, 1],
+          }}
+          transition={{
+            duration: 2,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+        />
+      )}
       
       {/* Main Content */}
       <motion.div 
