@@ -123,7 +123,7 @@ export function Navbar() {
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.8, duration: 0.5 }}
             >
-              Let's Connect
+              Let&apos;s Connect
             </motion.a>
           </div>
 
@@ -211,7 +211,7 @@ export function Navbar() {
                     className="btn-primary w-full text-center block"
                     onClick={() => setIsMobileMenuOpen(false)}
                   >
-                    Let's Connect
+                    Let&apos;s Connect
                   </a>
                 </motion.div>
               </div>

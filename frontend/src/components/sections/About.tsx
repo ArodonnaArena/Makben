@@ -99,7 +99,7 @@ export function About() {
                   transition={{ delay: 1, duration: 0.6 }}
                 >
                   My expertise encompasses system design, maintenance protocols, and implementing cutting-edge 
-                  solutions for critical aviation infrastructure. I've led numerous projects that have 
+                  solutions for critical aviation infrastructure. I&apos;ve led numerous projects that have 
                   significantly improved operational efficiency and safety standards.
                 </motion.p>
                 
@@ -109,7 +109,7 @@ export function About() {
                   animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
                   transition={{ delay: 1.2, duration: 0.6 }}
                 >
-                  I'm passionate about ensuring the safety and efficiency of Nigeria's airspace through 
+                  I&apos;m passionate about ensuring the safety and efficiency of Nigeria&apos;s airspace through 
                   innovative engineering solutions, meticulous maintenance practices, and continuous 
                   technological advancement.
                 </motion.p>
