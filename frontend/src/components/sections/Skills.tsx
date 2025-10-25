@@ -1,47 +1,19 @@
 "use client"
 import { motion, useScroll, useTransform } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
 import { ParticleSystem, FloatingShapes } from '../ui/ParticleSystem'
+import { useSkills } from '@/hooks/useData'
+import { SkillCardSkeleton } from '../ui/LoadingSkeleton'
 
-const skillCategories = [
-  {
-    category: "Technical Expertise",
-    icon: "⚡",
-    color: "from-primary-500 to-primary-700",
-    items: [
-      { name: "Electrical System Design", level: 95, icon: "🔧" },
-      { name: "Aviation Systems Maintenance", level: 90, icon: "✈️" },
-      { name: "Power Distribution Systems", level: 88, icon: "🔌" },
-      { name: "Circuit Analysis", level: 92, icon: "📊" },
-      { name: "PLC Programming", level: 85, icon: "💻" }
-    ]
-  },
-  {
-    category: "Software & Tools",
-    icon: "🛠️",
-    color: "from-electric-500 to-electric-700",
-    items: [
-      { name: "AutoCAD Electrical", level: 85, icon: "📐" },
-      { name: "ETAP", level: 80, icon: "⚙️" },
-      { name: "Siemens TIA Portal", level: 82, icon: "🏭" },
-      { name: "MATLAB", level: 75, icon: "📈" },
-      { name: "Microsoft Office Suite", level: 90, icon: "📋" }
-    ]
-  },
-  {
-    category: "Leadership & Management",
-    icon: "👥",
-    color: "from-accent-500 to-accent-700",
-    items: [
-      { name: "Project Management", level: 88, icon: "📋" },
-      { name: "Team Leadership", level: 85, icon: "👨‍💼" },
-      { name: "Quality Assurance", level: 92, icon: "✅" },
-      { name: "Safety Protocols", level: 95, icon: "🛡️" },
-      { name: "Training & Development", level: 80, icon: "🎓" }
-    ]
-  }
-]
+// Category configuration for styling
+const categoryConfig: Record<string, { icon: string; color: string }> = {
+  "Technical Expertise": { icon: "⚡", color: "from-primary-500 to-primary-700" },
+  "Software & Tools": { icon: "🛠️", color: "from-electric-500 to-electric-700" },
+  "Leadership & Management": { icon: "👥", color: "from-accent-500 to-accent-700" },
+  "Programming": { icon: "💻", color: "from-blue-500 to-blue-700" },
+  "Design": { icon: "🎨", color: "from-purple-500 to-purple-700" },
+}
 
 const certifications = [
   { name: "Professional Engineer (PE)", year: "2020", icon: "🏆" },
@@ -59,6 +31,27 @@ export function Skills() {
   const [hoveredSkill, setHoveredSkill] = useState<string | null>(null)
   const { scrollYProgress } = useScroll()
   const y = useTransform(scrollYProgress, [0, 1], [0, -100])
+  
+  // Fetch skills from API
+  const { skills, isLoading, isError } = useSkills()
+  
+  // Group skills by category
+  const skillCategories = useMemo(() => {
+    const grouped = skills.reduce((acc, skill) => {
+      if (!acc[skill.category]) {
+        acc[skill.category] = []
+      }
+      acc[skill.category].push(skill)
+      return acc
+    }, {} as Record<string, typeof skills>)
+    
+    return Object.entries(grouped).map(([category, items]) => ({
+      category,
+      icon: categoryConfig[category]?.icon || "📚",
+      color: categoryConfig[category]?.color || "from-gray-500 to-gray-700",
+      items
+    }))
+  }, [skills])
 
   return (
     <section id="skills" className="section-padding relative overflow-hidden">
@@ -103,9 +96,34 @@ export function Skills() {
             </motion.p>
           </div>
           
+          {/* Loading State */}
+          {isLoading && (
+            <div className="grid lg:grid-cols-3 gap-8 mb-20">
+              {[...Array(3)].map((_, i) => (
+                <SkillCardSkeleton key={i} />
+              ))}
+            </div>
+          )}
+          
+          {/* Error State */}
+          {isError && (
+            <div className="text-center py-20">
+              <motion.div
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                className="glass-strong rounded-2xl p-12 max-w-md mx-auto"
+              >
+                <div className="text-6xl mb-4">⚠️</div>
+                <h3 className="text-2xl font-bold text-red-400 mb-4">Failed to Load Skills</h3>
+                <p className="text-gray-400">Please try refreshing the page.</p>
+              </motion.div>
+            </div>
+          )}
+          
           {/* Skills Grid */}
-          <div className="grid lg:grid-cols-3 gap-8 mb-20">
-            {skillCategories.map((skillSet, categoryIndex) => (
+          {!isLoading && !isError && skillCategories.length > 0 && (
+            <div className="grid lg:grid-cols-3 gap-8 mb-20">
+              {skillCategories.map((skillSet, categoryIndex) => (
               <motion.div
                 key={categoryIndex}
                 className="card-glass group"
@@ -132,29 +150,31 @@ export function Skills() {
                 <div className="space-y-6">
                   {skillSet.items.map((skill, skillIndex) => (
                     <motion.div
-                      key={skillIndex}
+                      key={skill._id}
                       className="group/skill"
                       initial={{ opacity: 0, x: -30 }}
                       animate={inView ? { opacity: 1, x: 0 } : { opacity: 0, x: -30 }}
                       transition={{ delay: (categoryIndex * 0.2) + (skillIndex * 0.1), duration: 0.6 }}
-                      onHoverStart={() => setHoveredSkill(`${categoryIndex}-${skillIndex}`)}
+                      onHoverStart={() => setHoveredSkill(skill._id)}
                       onHoverEnd={() => setHoveredSkill(null)}
                     >
                       <div className="flex items-center justify-between mb-3">
                         <div className="flex items-center space-x-2">
-                          <span className="text-lg group-hover/skill:scale-110 transition-transform duration-300">
-                            {skill.icon}
-                          </span>
+                          {skill.icon && (
+                            <span className="text-lg group-hover/skill:scale-110 transition-transform duration-300">
+                              {skill.icon}
+                            </span>
+                          )}
                           <span className="text-gray-300 font-medium group-hover/skill:text-white transition-colors duration-300">
                             {skill.name}
                           </span>
                         </div>
                         <motion.span 
                           className={`text-sm font-bold bg-gradient-to-r ${skillSet.color} bg-clip-text text-transparent`}
-                          animate={hoveredSkill === `${categoryIndex}-${skillIndex}` ? { scale: 1.1 } : { scale: 1 }}
+                          animate={hoveredSkill === skill._id ? { scale: 1.1 } : { scale: 1 }}
                           transition={{ duration: 0.2 }}
                         >
-                          {skill.level}%
+                          {skill.proficiency}%
                         </motion.span>
                       </div>
                       
@@ -163,7 +183,7 @@ export function Skills() {
                         <motion.div
                           className={`absolute inset-y-0 left-0 bg-gradient-to-r ${skillSet.color} rounded-full`}
                           initial={{ width: 0 }}
-                          animate={inView ? { width: `${skill.level}%` } : { width: 0 }}
+                          animate={inView ? { width: `${skill.proficiency}%` } : { width: 0 }}
                           transition={{ 
                             duration: 1.5, 
                             delay: (categoryIndex * 0.2) + (skillIndex * 0.1),
@@ -175,7 +195,7 @@ export function Skills() {
                         <motion.div
                           className={`absolute inset-y-0 left-0 bg-gradient-to-r ${skillSet.color} rounded-full opacity-50 blur-sm`}
                           initial={{ width: 0 }}
-                          animate={inView ? { width: `${skill.level}%` } : { width: 0 }}
+                          animate={inView ? { width: `${skill.proficiency}%` } : { width: 0 }}
                           transition={{ 
                             duration: 1.5, 
                             delay: (categoryIndex * 0.2) + (skillIndex * 0.1),
@@ -184,7 +204,7 @@ export function Skills() {
                         />
                         
                         {/* Animated Shine */}
-                        {hoveredSkill === `${categoryIndex}-${skillIndex}` && (
+                        {hoveredSkill === skill._id && (
                           <motion.div
                             className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent"
                             initial={{ x: '-100%' }}
@@ -199,6 +219,7 @@ export function Skills() {
               </motion.div>
             ))}
           </div>
+          )}
           
           {/* Certifications Section */}
           <motion.div
