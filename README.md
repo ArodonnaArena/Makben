@@ -1,4 +1,4 @@
-# Makanjuola Benjamin - Portfolio Website
+# Makanjuola Ebenezer - Portfolio Website
 
 A stunning, modern portfolio website showcasing electrical engineering expertise and professional achievements.
 
@@ -80,7 +80,7 @@ npm start
 
 ## 🎯 Professional Focus
 
-This portfolio represents the work of **Makanjuola Benjamin**, an experienced Electrical Engineer specializing in:
+This portfolio represents the work of **Makanjuola Ebenezer**, an experienced Electrical Engineer specializing in:
 
 - Aviation electrical systems
 - Power distribution design
@@ -90,7 +90,7 @@ This portfolio represents the work of **Makanjuola Benjamin**, an experienced El
 
 ## 📧 Contact
 
-**Makanjuola Benjamin**  
+**Makanjuola Ebenezer**  
 Electrical Engineer at NAMA  
 [Your Email] | [Your LinkedIn] | [Your Phone]
 
@@ -100,4 +100,4 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 ---
 
-*Built with passion and precision by Makanjuola Benjamin*
+*Built with passion and precision by Makanjuola Ebenezer*

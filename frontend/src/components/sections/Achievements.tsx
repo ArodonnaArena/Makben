@@ -16,7 +16,7 @@ export function Achievements() {
   const { achievements, isLoading, isError } = useAchievements()
 
   return (
-    <section id="achievements" className="py-20 bg-gray-800">
+    <section id="achievements" className="py-20 bg-[#1e1e2e]">
       <div className="container mx-auto px-4">
         <motion.div
           ref={ref}
@@ -24,7 +24,24 @@ export function Achievements() {
           animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
           transition={{ duration: 0.8 }}
         >
-          <h2 className="text-4xl font-bold text-white mb-12 text-center">Achievements & Awards</h2>
+          <div className="text-center mb-16">
+            <motion.h2
+              className="text-4xl md:text-5xl font-bold text-white mb-4"
+              initial={{ opacity: 0, y: 20 }}
+              animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+              transition={{ delay: 0.2, duration: 0.8 }}
+            >
+              Achievements & Awards
+            </motion.h2>
+            <motion.p
+              className="text-gray-400 text-lg max-w-2xl mx-auto"
+              initial={{ opacity: 0, y: 20 }}
+              animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+              transition={{ delay: 0.3, duration: 0.8 }}
+            >
+              Recognition and milestones throughout my career
+            </motion.p>
+          </div>
           
           {isLoading && (
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -44,30 +61,30 @@ export function Achievements() {
                   initial={{ opacity: 0, scale: 0.9 }}
                   animate={inView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }}
                   transition={{ duration: 0.5, delay: index * 0.2 }}
-                  className="bg-gray-900 rounded-xl overflow-hidden shadow-xl hover:shadow-2xl transition-all"
+                  className="bg-[#2b2d3a] rounded-2xl overflow-hidden hover:transform hover:-translate-y-2 transition-all duration-300 group"
                 >
                   {achievement.imageUrl && (
-                    <div className="relative h-48">
+                    <div className="relative h-48 overflow-hidden">
                       <Image
                         src={`${API_URL}${achievement.imageUrl}`}
                         alt={achievement.title}
                         fill
-                        className="object-cover"
+                        className="object-cover group-hover:scale-110 transition-transform duration-500"
                       />
                     </div>
                   )}
                   <div className="p-6">
-                    <div className="text-blue-400 text-sm mb-2">
+                    <div className="text-[#ff4757] text-sm mb-2 font-semibold">
                       {new Date(achievement.date).getFullYear()} | {achievement.category}
                     </div>
-                    <h3 className="text-xl font-bold text-white mb-2">{achievement.title}</h3>
+                    <h3 className="text-xl font-bold text-white mb-2 group-hover:text-[#ff4757] transition-colors">{achievement.title}</h3>
                     {achievement.issuer && (
-                      <div className="text-blue-300 mb-3">{achievement.issuer}</div>
+                      <div className="text-gray-300 mb-3">{achievement.issuer}</div>
                     )}
                     <p className="text-gray-400">{achievement.description}</p>
                     {achievement.documentUrl && (
                       <a href={`${API_URL}${achievement.documentUrl}`} target="_blank" rel="noopener noreferrer"
-                         className="text-blue-400 hover:text-blue-300 text-sm mt-4 inline-block">View Certificate →</a>
+                         className="text-[#ff4757] hover:text-[#ff6b81] text-sm mt-4 inline-block">View Certificate →</a>
                     )}
                   </div>
                 </motion.div>

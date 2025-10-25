@@ -4,7 +4,7 @@ This file provides guidance to WARP (warp.dev) when working with code in this re
 
 ## Project Overview
 
-This is a modern portfolio website for Makanjuola Benjamin, an Electrical Engineer at NAMA. The project uses a monorepo structure with separate frontend and backend directories.
+This is a modern portfolio website for Makanjuola Ebenezer, an Electrical Engineer at NAMA. The project uses a monorepo structure with separate frontend and backend directories.
 
 **Tech Stack:**
 - Frontend: Next.js 15.1.5, React 19, TypeScript, Tailwind CSS 3.4.1, Framer Motion 12.0.1
@@ -18,6 +18,11 @@ Navigate to the frontend directory for all frontend commands:
 
 ```pwsh
 cd frontend
+```
+
+**Install dependencies:**
+```pwsh
+npm install
 ```
 
 **Development server:**
@@ -48,13 +53,25 @@ Navigate to the backend directory for backend commands:
 cd backend
 ```
 
-**Note:** Backend does not currently have a start script defined in package.json. To run the backend, you'll need to add a start script or use:
+**Install dependencies:**
 ```pwsh
-node src/app.ts
+npm install
 ```
-or
+
+**Development server:**
 ```pwsh
-npx ts-node src/app.ts
+npm run dev
+```
+Opens on http://localhost:5000
+
+**Build for production:**
+```pwsh
+npm run build
+```
+
+**Start production server:**
+```pwsh
+npm start
 ```
 
 ### Environment Variables
@@ -98,7 +115,7 @@ Makben/
 
 2. **Section Components** (`src/components/sections/`):
    - Each major page section is a separate component
-   - Sections: Hero, About, Experience, Skills, Achievements, CV, Projects, Contact
+   - Sections: Hero, About, Experience, Skills, Achievements, CV, Projects, VideoGallery, Contact
    - All sections are imported and rendered in `src/app/page.tsx`
 
 3. **UI Components** (`src/components/ui/`):
@@ -130,8 +147,13 @@ Makben/
 - MongoDB connection via Mongoose (connection string from env)
 
 **Data Models:**
-- `Project`: title, description, technologies[], imageUrl, projectUrl, githubUrl, date
-- `Skill`: name, category, proficiency (number), icon
+- `User`: email, password (hashed), name, role (admin/viewer), lastLogin
+- `Profile`: firstName, lastName, title, company, bio, profileImage, contact, social, stats, skills
+- `Project`: title, description, technologies[], imageUrl, projectUrl, githubUrl, status, featured
+- `Skill`: name, category, proficiency (number), icon, yearsOfExperience
+- `Experience`: position, company, location, startDate, endDate, current, description, achievements[], technologies[]
+- `Achievement`: title, description, date, category, issuer, imageUrl, documentUrl, featured
+- `Video`: title, description, videoUrl, thumbnailUrl, category, duration, tags[], featured, views, isExternal
 
 **Security:**
 - Dependencies include: bcryptjs, jsonwebtoken, helmet
@@ -179,12 +201,13 @@ Makben/
 8. File uploads handled by multer in `/uploads` directory
 
 ### Backend API Endpoints:
-- **Auth:** `/api/auth/register`, `/api/auth/login`, `/api/auth/me`
-- **Profile:** `/api/profile` (GET public, PUT admin)
-- **Projects:** `/api/projects` (full CRUD)
+- **Auth:** `/api/auth/register`, `/api/auth/login`, `/api/auth/me`, `/api/auth/change-password`
+- **Profile:** `/api/profile` (GET public, PUT/POST admin), `/api/profile/upload-image`
+- **Projects:** `/api/projects` (full CRUD), `/api/projects/upload-image`
 - **Skills:** `/api/skills` (full CRUD + bulk create)
 - **Experiences:** `/api/experiences` (full CRUD)
-- **Achievements:** `/api/achievements` (full CRUD)
+- **Achievements:** `/api/achievements` (full CRUD), `/api/achievements/upload-image`, `/api/achievements/upload-document`
+- **Videos:** `/api/videos` (full CRUD), `/api/videos/upload-video`, `/api/videos/upload-thumbnail`
 - **Health:** `/api/health`
 
 ### When Adding New Features:
@@ -198,12 +221,123 @@ Makben/
 - **Database:** MongoDB (localhost or Atlas)
 - **Connection:** `mongodb://localhost:27017/makben-portfolio`
 - **GUI Tool:** MongoDB Compass (installed)
-- **Models:** User, Profile, Project, Skill, Experience, Achievement
+- **Models:** User, Profile, Project, Skill, Experience, Achievement, Video
 
 ### Security Notes:
 - Passwords are hashed with bcryptjs (10 rounds)
 - JWT tokens expire in 7 days
-- File uploads limited to 10MB
+- Image uploads limited to 10MB
+- Video uploads limited to 100MB
 - Accepted image types: jpg, jpeg, png, gif, webp
+- Accepted video types: mp4, avi, mov, wmv, flv, webm, mkv
 - Accepted document types: pdf, doc, docx
 - CORS configured for `http://localhost:3000`
+
+## Frontend-Backend Integration
+
+### Data Fetching
+- **Library:** SWR (stale-while-revalidate)
+- **Location:** `src/hooks/useData.ts`
+- **Available Hooks:**
+  - `useProfile()` - Fetch profile data
+  - `useProjects(params)` - Fetch projects (with filters)
+  - `useProject(id)` - Fetch single project
+  - `useSkills(params)` - Fetch skills
+  - `useExperiences()` - Fetch work experience
+  - `useAchievements(params)` - Fetch achievements
+  - `useVideos(params)` - Fetch videos
+  - `useVideo(id)` - Fetch single video
+
+### API Client
+- **Location:** `src/lib/api.ts`
+- **Modules:** profileAPI, projectsAPI, skillsAPI, experiencesAPI, achievementsAPI, videosAPI
+- **Auth:** Automatically includes JWT token from localStorage
+
+### Environment Variables (Frontend)
+```
+NEXT_PUBLIC_API_URL=http://localhost:5000/api
+```
+
+## Admin Dashboard
+
+### Admin Routes
+- **Login:** `/admin/login`
+- **Dashboard:** `/admin/dashboard`
+- **Profile:** `/admin/dashboard/profile`
+- **Experience:** `/admin/dashboard/experience`
+- **Projects:** `/admin/dashboard/projects`
+- **Skills:** `/admin/dashboard/skills`
+- **Achievements:** `/admin/dashboard/achievements`
+- **Videos:** `/admin/dashboard/videos` (TODO)
+
+### Admin Features
+- Protected routes with JWT authentication
+- CRUD interfaces for all content types
+- Image/video upload with preview
+- Real-time form validation
+- Success/error messaging
+- SWR cache invalidation on updates
+
+### Creating Admin User
+```bash
+# POST http://localhost:5000/api/auth/register
+{
+  "email": "admin@makben.com",
+  "password": "YourSecurePassword123!",
+  "name": "Makanjuola Ebenezer",
+  "role": "admin"
+}
+```
+
+## Recent Updates (2025)
+
+### Video Gallery Feature
+- Complete video management system
+- Support for uploaded videos (up to 100MB)
+- Support for external YouTube/Vimeo links
+- Category filtering (Project Demo, Tutorial, Presentation, etc.)
+- Thumbnail support with auto-fetch from YouTube
+- View tracking and statistics
+- Featured video highlighting
+- Modal video player with details
+- Responsive grid layout
+
+### Frontend Enhancements
+- All sections now fetch data dynamically from API
+- Loading skeletons for better UX
+- Error handling and fallback UI
+- Hydration error fixes for particle systems
+- Client-only rendering for random animations
+
+### TypeScript Improvements
+- Proper type definitions for all models
+- Interface exports from models
+- Fixed return type annotations
+- Reduced strict checking for faster development
+
+## Troubleshooting
+
+### Common Issues
+
+**Backend won't start:**
+- Check MongoDB is running: `Get-Service MongoDB`
+- Check port 5000 is available
+- Check `.env` file exists with correct variables
+- Run `npm install` in backend directory
+
+**Frontend can't connect to backend:**
+- Verify backend is running on port 5000
+- Check `NEXT_PUBLIC_API_URL` in frontend `.env.local`
+- Check CORS settings in `backend/src/app.ts`
+- Clear browser cache and restart dev server
+
+**Hydration errors:**
+- Check that components using `Math.random()` have client-only rendering
+- Ensure `useEffect` is used for client-side only operations
+- Verify `"use client"` directive is at top of component files
+
+**TypeScript errors:**
+- Run `npm run build` to check for errors
+- Check `tsconfig.json` for strict settings
+- Verify all imports have correct paths
+- Use `@/` alias for src imports

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import type { Profile, Project, Skill, Experience, Achievement, AuthResponse } from '@/types';
+import type { Profile, Project, Skill, Experience, Achievement, Video, Service, AuthResponse } from '@/types';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
 
@@ -185,6 +185,80 @@ export const achievementsAPI = {
 
   delete: async (id: string) => {
     const response = await api.delete(`/achievements/${id}`);
+    return response.data;
+  },
+};
+
+// Services API
+export const servicesAPI = {
+  getAll: async () => {
+    const response = await api.get<Service[]>('/services');
+    return response.data;
+  },
+
+  getOne: async (id: string) => {
+    const response = await api.get<Service>(`/services/${id}`);
+    return response.data;
+  },
+
+  create: async (data: Partial<Service>) => {
+    const response = await api.post('/services', data);
+    return response.data;
+  },
+
+  update: async (id: string, data: Partial<Service>) => {
+    const response = await api.put(`/services/${id}`, data);
+    return response.data;
+  },
+
+  delete: async (id: string) => {
+    const response = await api.delete(`/services/${id}`);
+    return response.data;
+  },
+};
+
+// Videos API
+export const videosAPI = {
+  getAll: async (params?: { category?: string; featured?: boolean; tags?: string }) => {
+    const response = await api.get<Video[]>('/videos', { params });
+    return response.data;
+  },
+
+  getOne: async (id: string) => {
+    const response = await api.get<Video>(`/videos/${id}`);
+    return response.data;
+  },
+
+  create: async (data: Partial<Video>) => {
+    const response = await api.post('/videos', data);
+    return response.data;
+  },
+
+  update: async (id: string, data: Partial<Video>) => {
+    const response = await api.put(`/videos/${id}`, data);
+    return response.data;
+  },
+
+  delete: async (id: string) => {
+    const response = await api.delete(`/videos/${id}`);
+    return response.data;
+  },
+
+  uploadVideo: async (file: File) => {
+    const formData = new FormData();
+    formData.append('video', file);
+    const response = await api.post('/videos/upload-video', formData, {
+      headers: { 'Content-Type': 'multipart/form-data' },
+    });
+    return response.data;
+  },
+
+  uploadThumbnail: async (file: File) => {
+    const formData = new FormData();
+    formData.append('thumbnail', file);
+    const response = await api.post('/videos/upload-thumbnail', formData, {
+      headers: { 'Content-Type': 'multipart/form-data' },
+    });
     return response.data;
   },
 };

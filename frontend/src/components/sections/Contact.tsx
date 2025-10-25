@@ -1,7 +1,8 @@
 "use client"
 import { motion } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
+import { useProfile } from '@/hooks/useData'
 
 export function Contact() {
   const [ref, inView] = useInView({
@@ -9,9 +10,12 @@ export function Contact() {
     threshold: 0.1
   })
 
+  const { profile } = useProfile()
+
   const [formData, setFormData] = useState({
     name: '',
     email: '',
+    subject: '',
     message: ''
   })
 
@@ -30,7 +34,7 @@ export function Contact() {
   }
 
   return (
-    <section id="contact" className="py-20 bg-gray-900">
+    <section id="contact" className="py-20 bg-[#2b2d3a] relative overflow-hidden">
       <div className="container mx-auto px-4">
         <motion.div
           ref={ref}
@@ -39,73 +43,127 @@ export function Contact() {
           transition={{ duration: 0.8 }}
           className="max-w-4xl mx-auto"
         >
-          <h2 className="text-4xl font-bold text-white mb-12 text-center">Get in Touch</h2>
-          
-          <div className="grid md:grid-cols-2 gap-12">
-            <div className="space-y-6">
-              <div className="bg-gray-800 p-6 rounded-xl">
-                <h3 className="text-xl font-bold text-blue-400 mb-4">Contact Information</h3>
-                <div className="space-y-4 text-gray-300">
-                  <p>📍 NAMA Headquarters, Lagos, Nigeria</p>
-                  <p>📧 makanjuola.ebenezer@nama.gov.ng</p>
-                  <p>📱 +234 XXX XXX XXXX</p>
-                </div>
-              </div>
-              
-              <div className="bg-gray-800 p-6 rounded-xl">
-                <h3 className="text-xl font-bold text-blue-400 mb-4">Connect</h3>
-                <div className="flex space-x-4">
-                  <a href="#" className="text-gray-300 hover:text-blue-400 transition-colors">
-                    LinkedIn
-                  </a>
-                  <a href="#" className="text-gray-300 hover:text-blue-400 transition-colors">
-                    Twitter
-                  </a>
-                </div>
-              </div>
-            </div>
+          {/* Section Header */}
+          <div className="text-center mb-16">
+            <motion.h2
+              className="text-4xl md:text-5xl font-bold text-white mb-4"
+              initial={{ opacity: 0, y: 20 }}
+              animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+              transition={{ delay: 0.2, duration: 0.8 }}
+            >
+              Let's Work Together
+            </motion.h2>
+            <motion.p
+              className="text-gray-400 text-lg"
+              initial={{ opacity: 0, y: 20 }}
+              animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+              transition={{ delay: 0.3, duration: 0.8 }}
+            >
+              Have a project in mind? Let's discuss how we can work together
+            </motion.p>
+          </div>
 
-            <form onSubmit={handleSubmit} className="space-y-6">
+          {/* Contact Form */}
+          <motion.form 
+            onSubmit={handleSubmit} 
+            className="space-y-6"
+            initial={{ opacity: 0, y: 30 }}
+            animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+            transition={{ delay: 0.4, duration: 0.8 }}
+          >
+            <div className="grid md:grid-cols-2 gap-6">
+              {/* Name */}
               <div>
-                <label className="block text-gray-300 mb-2">Name</label>
                 <input
                   type="text"
                   name="name"
                   value={formData.name}
                   onChange={handleChange}
-                  className="w-full bg-gray-800 rounded-lg px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  placeholder="Name"
+                  className="w-full bg-transparent border-2 border-[#ff4757] rounded-lg px-6 py-4 text-white placeholder-gray-400 focus:outline-none focus:border-[#ff6b81] transition-colors"
                   required
                 />
               </div>
+              
+              {/* Email */}
               <div>
-                <label className="block text-gray-300 mb-2">Email</label>
                 <input
                   type="email"
                   name="email"
                   value={formData.email}
                   onChange={handleChange}
-                  className="w-full bg-gray-800 rounded-lg px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  placeholder="Email"
+                  className="w-full bg-transparent border-2 border-[#ff4757] rounded-lg px-6 py-4 text-white placeholder-gray-400 focus:outline-none focus:border-[#ff6b81] transition-colors"
                   required
                 />
               </div>
-              <div>
-                <label className="block text-gray-300 mb-2">Message</label>
-                <textarea
-                  name="message"
-                  value={formData.message}
-                  onChange={handleChange}
-                  className="w-full bg-gray-800 rounded-lg px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 h-32"
-                  required
-                ></textarea>
-              </div>
-              <button
+            </div>
+            
+            {/* Subject */}
+            <div>
+              <input
+                type="text"
+                name="subject"
+                value={formData.subject}
+                onChange={handleChange}
+                placeholder="Subject"
+                className="w-full bg-transparent border-2 border-[#ff4757] rounded-lg px-6 py-4 text-white placeholder-gray-400 focus:outline-none focus:border-[#ff6b81] transition-colors"
+                required
+              />
+            </div>
+            
+            {/* Message */}
+            <div>
+              <textarea
+                name="message"
+                value={formData.message}
+                onChange={handleChange}
+                placeholder="Message"
+                className="w-full bg-transparent border-2 border-[#ff4757] rounded-lg px-6 py-4 text-white placeholder-gray-400 focus:outline-none focus:border-[#ff6b81] transition-colors h-40 resize-none"
+                required
+              ></textarea>
+            </div>
+            
+            {/* Submit Button */}
+            <div className="text-center">
+              <motion.button
                 type="submit"
-                className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg font-semibold transition-colors"
+                className="px-12 py-4 bg-[#ff4757] hover:bg-[#ff6b81] text-white rounded-full font-semibold text-lg transition-colors"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
               >
                 Send Message
-              </button>
-            </form>
-          </div>
+              </motion.button>
+            </div>
+          </motion.form>
+
+          {/* Contact Info */}
+          <motion.div
+            className="mt-16 text-center space-y-4"
+            initial={{ opacity: 0 }}
+            animate={inView ? { opacity: 1 } : { opacity: 0 }}
+            transition={{ delay: 0.6, duration: 0.8 }}
+          >
+            {profile?.email && (
+              <p className="text-gray-400">
+                <span className="text-white font-semibold">Email:</span> {profile.email}
+              </p>
+            )}
+            {profile?.location && (
+              <p className="text-gray-400">
+                <span className="text-white font-semibold">Location:</span> {[
+                  profile.location.city,
+                  profile.location.state,
+                  profile.location.country
+                ].filter(Boolean).join(', ') || 'Abuja, Nigeria'}
+              </p>
+            )}
+            {profile?.phone && (
+              <p className="text-gray-400">
+                <span className="text-white font-semibold">Phone:</span> {profile.phone}
+              </p>
+            )}
+          </motion.div>
         </motion.div>
       </div>
     </section>

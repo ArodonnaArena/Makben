@@ -19,6 +19,8 @@ export interface Profile {
   resumeUrl?: string;
   email: string;
   phone?: string;
+  birthday?: string;
+  interests?: string[];
   location?: {
     city?: string;
     state?: string;
@@ -45,6 +47,14 @@ export interface Profile {
   languages?: Array<{
     name: string;
     proficiency: string;
+  }>;
+  education?: Array<{
+    institution: string;
+    degree: string;
+    field?: string;
+    startDate?: string;
+    endDate?: string;
+    current?: boolean;
   }>;
   availability?: 'available' | 'unavailable' | 'open-to-opportunities';
   updatedAt: string;
@@ -108,6 +118,36 @@ export interface Achievement {
   issuer?: string;
   imageUrl?: string;
   documentUrl?: string;
+  featured: boolean;
+  order: number;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface Video {
+  _id: string;
+  title: string;
+  description: string;
+  videoUrl: string;
+  thumbnailUrl?: string;
+  category: 'Project Demo' | 'Tutorial' | 'Presentation' | 'Interview' | 'Event' | 'Other';
+  duration?: string;
+  tags: string[];
+  featured: boolean;
+  views: number;
+  publishedDate: string;
+  externalUrl?: string;
+  isExternal: boolean;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface Service {
+  _id: string;
+  title: string;
+  description: string;
+  icon: string;
+  category: string;
   featured: boolean;
   order: number;
   createdAt: string;

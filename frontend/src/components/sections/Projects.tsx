@@ -2,10 +2,13 @@
 import { motion } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
 import Image from 'next/image'
+import { useState } from 'react'
 import { useProjects } from '@/hooks/useData'
 import { ProjectCardSkeleton } from '../ui/LoadingSkeleton'
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL?.replace('/api', '') || 'http://localhost:5000'
+
+const categories = ['All', 'UI/UX', 'Branding', 'Apps', 'Web']
 
 export function Projects() {
   const [ref, inView] = useInView({
@@ -13,10 +16,18 @@ export function Projects() {
     threshold: 0.1
   })
   
-  const { projects, isLoading, isError } = useProjects({ featured: true })
+  const [selectedCategory, setSelectedCategory] = useState('All')
+  const { projects, isLoading, isError } = useProjects()
+
+  const filteredProjects = selectedCategory === 'All' 
+    ? projects 
+    : projects.filter(project => 
+        project.categories?.includes(selectedCategory) || 
+        project.technologies?.some((tech: string) => tech.toLowerCase().includes(selectedCategory.toLowerCase()))
+      )
 
   return (
-    <section id="projects" className="py-20 bg-gray-800">
+    <section id="projects" className="py-20 bg-[#1e1e2e] relative overflow-hidden">
       <div className="container mx-auto px-4">
         <motion.div
           ref={ref}
@@ -24,7 +35,49 @@ export function Projects() {
           animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
           transition={{ duration: 0.8 }}
         >
-          <h2 className="text-4xl font-bold text-white mb-12 text-center">Featured Projects</h2>
+          {/* Section Header */}
+          <div className="text-center mb-16">
+            <motion.h2
+              className="text-4xl md:text-5xl font-bold text-white mb-4"
+              initial={{ opacity: 0, y: 20 }}
+              animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+              transition={{ delay: 0.2, duration: 0.8 }}
+            >
+              Portfolio Showcase
+            </motion.h2>
+            <motion.p
+              className="text-gray-400 text-lg max-w-2xl mx-auto"
+              initial={{ opacity: 0, y: 20 }}
+              animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+              transition={{ delay: 0.3, duration: 0.8 }}
+            >
+              Explore my recent work and projects
+            </motion.p>
+          </div>
+
+          {/* Category Filter */}
+          <motion.div 
+            className="flex flex-wrap justify-center gap-4 mb-12"
+            initial={{ opacity: 0, y: 20 }}
+            animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+            transition={{ delay: 0.4, duration: 0.8 }}
+          >
+            {categories.map((category) => (
+              <motion.button
+                key={category}
+                onClick={() => setSelectedCategory(category)}
+                className={`px-6 py-2 rounded-full font-medium transition-all ${
+                  selectedCategory === category
+                    ? 'bg-[#ff4757] text-white'
+                    : 'bg-[#2b2d3a] text-gray-400 hover:bg-[#353748] hover:text-white'
+                }`}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                {category}
+              </motion.button>
+            ))}
+          </motion.div>
           
           {/* Loading State */}
           {isLoading && (
@@ -53,45 +106,39 @@ export function Projects() {
           {/* Projects Grid */}
           {!isLoading && !isError && (
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {projects.map((project, index) => (
+              {filteredProjects.map((project, index) => (
                 <motion.div
                   key={project._id}
                   initial={{ opacity: 0, scale: 0.9 }}
                   animate={inView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }}
-                  transition={{ duration: 0.5, delay: index * 0.2 }}
-                  className="bg-gray-900 rounded-xl overflow-hidden shadow-xl hover:shadow-2xl transition-shadow"
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  className="group bg-[#2b2d3a] rounded-2xl overflow-hidden hover:transform hover:-translate-y-2 transition-all duration-300"
+                  whileHover={{ y: -8 }}
                 >
                   {project.imageUrl && (
-                    <div className="relative h-48">
+                    <div className="relative h-56 overflow-hidden">
                       <Image
                         src={`${API_URL}${project.imageUrl}`}
                         alt={project.title}
                         fill
-                        className="object-cover"
+                        className="object-cover group-hover:scale-110 transition-transform duration-500"
                       />
+                      <div className="absolute inset-0 bg-gradient-to-t from-[#2b2d3a] via-transparent to-transparent opacity-60" />
                     </div>
                   )}
                   <div className="p-6">
-                    <h3 className="text-xl font-bold text-white mb-3">{project.title}</h3>
-                    <p className="text-gray-300 mb-4">{project.shortDescription || project.description}</p>
-                    <div className="flex flex-wrap gap-2 mb-4">
-                      {project.technologies.map((tech, idx) => (
-                        <span key={idx} className="bg-blue-500/20 text-blue-400 px-3 py-1 rounded-full text-sm">
+                    <h3 className="text-xl font-bold text-white mb-3 group-hover:text-[#ff4757] transition-colors">{project.title}</h3>
+                    <p className="text-gray-400 mb-4 line-clamp-2">{project.shortDescription || project.description}</p>
+                    <div className="flex flex-wrap gap-2">
+                      {project.technologies.slice(0, 3).map((tech, idx) => (
+                        <span key={idx} className="bg-[#353748] text-gray-300 px-3 py-1 rounded-full text-xs">
                           {tech}
                         </span>
                       ))}
-                    </div>
-                    {project.outcomes && project.outcomes.length > 0 && (
-                      <p className="text-green-400 text-sm">{project.outcomes[0]}</p>
-                    )}
-                    <div className="flex gap-2 mt-4">
-                      {project.projectUrl && (
-                        <a href={project.projectUrl} target="_blank" rel="noopener noreferrer" 
-                           className="text-blue-400 hover:text-blue-300 text-sm">View Project →</a>
-                      )}
-                      {project.githubUrl && (
-                        <a href={project.githubUrl} target="_blank" rel="noopener noreferrer"
-                           className="text-gray-400 hover:text-gray-300 text-sm">GitHub →</a>
+                      {project.technologies.length > 3 && (
+                        <span className="bg-[#353748] text-gray-300 px-3 py-1 rounded-full text-xs">
+                          +{project.technologies.length - 3}
+                        </span>
                       )}
                     </div>
                   </div>

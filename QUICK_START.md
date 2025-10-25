@@ -49,7 +49,7 @@ Open browser or Postman:
 {
   "email": "admin@makben.com",
   "password": "SecurePassword123!",
-  "name": "Makanjuola Benjamin",
+  "name": "Makanjuola Ebenezer",
   "role": "admin"
 }
 ```
@@ -62,7 +62,7 @@ Open browser or Postman:
   "user": {
     "id": "...",
     "email": "admin@makben.com",
-    "name": "Makanjuola Benjamin",
+    "name": "Makanjuola Ebenezer",
     "role": "admin"
   }
 }

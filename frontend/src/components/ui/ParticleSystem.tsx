@@ -1,6 +1,6 @@
 "use client"
 import { motion } from 'framer-motion'
-import { useMemo } from 'react'
+import { useMemo, useEffect, useState } from 'react'
 
 interface Particle {
   id: number
@@ -23,7 +23,15 @@ export function ParticleSystem({
   colors = ['#3b82f6', '#06b6d4', '#d946ef', '#10b981'],
   className = ''
 }: ParticleSystemProps) {
+  const [mounted, setMounted] = useState(false)
+  
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+  
   const particles = useMemo(() => {
+    if (!mounted) return []
+    
     const newParticles: Particle[] = []
     
     for (let i = 0; i < count; i++) {
@@ -39,7 +47,9 @@ export function ParticleSystem({
     }
     
     return newParticles
-  }, [count, colors])
+  }, [count, colors, mounted])
+  
+  if (!mounted) return null
 
   return (
     <div className={`absolute inset-0 overflow-hidden pointer-events-none ${className}`}>
@@ -75,6 +85,20 @@ export function ParticleSystem({
 
 // Floating geometric shapes
 export function FloatingShapes({ className = '' }: { className?: string }) {
+  const [mounted, setMounted] = useState(false)
+  const [positions, setPositions] = useState<Array<{left: number, top: number}>>([])
+  
+  useEffect(() => {
+    setMounted(true)
+    setPositions([
+      { left: Math.random() * 100, top: Math.random() * 100 },
+      { left: Math.random() * 100, top: Math.random() * 100 },
+      { left: Math.random() * 100, top: Math.random() * 100 },
+      { left: Math.random() * 100, top: Math.random() * 100 },
+      { left: Math.random() * 100, top: Math.random() * 100 },
+    ])
+  }, [])
+  
   const shapes = [
     { type: 'circle', size: 'w-16 h-16', color: 'bg-primary-500/20', duration: 8 },
     { type: 'square', size: 'w-12 h-12', color: 'bg-electric-500/20', duration: 6 },
@@ -82,6 +106,8 @@ export function FloatingShapes({ className = '' }: { className?: string }) {
     { type: 'circle', size: 'w-8 h-8', color: 'bg-primary-400/30', duration: 7 },
     { type: 'square', size: 'w-14 h-14', color: 'bg-electric-400/20', duration: 9 },
   ]
+  
+  if (!mounted) return null
 
   return (
     <div className={`absolute inset-0 overflow-hidden pointer-events-none ${className}`}>
@@ -93,8 +119,8 @@ export function FloatingShapes({ className = '' }: { className?: string }) {
             shape.type === 'triangle' ? 'rotate-45' : 'rounded-lg'
           } blur-sm`}
           style={{
-            left: `${Math.random() * 100}%`,
-            top: `${Math.random() * 100}%`,
+            left: `${positions[index]?.left || 0}%`,
+            top: `${positions[index]?.top || 0}%`,
           }}
           animate={{
             y: [0, -50, 0],

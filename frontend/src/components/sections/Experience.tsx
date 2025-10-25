@@ -13,7 +13,7 @@ export function Experience() {
   const { experiences, isLoading, isError } = useExperiences()
 
   return (
-    <section id="experience" className="py-20 bg-gray-800">
+    <section id="experience" className="py-20 bg-[#2b2d3a]">
       <div className="container mx-auto px-4">
         <motion.div
           ref={ref}
@@ -21,7 +21,24 @@ export function Experience() {
           animate={inView ? { opacity: 1 } : { opacity: 0 }}
           transition={{ duration: 0.8 }}
         >
-          <h2 className="text-4xl font-bold text-white mb-12 text-center">Professional Experience</h2>
+          <div className="text-center mb-16">
+            <motion.h2 
+              className="text-4xl md:text-5xl font-bold text-white mb-4"
+              initial={{ opacity: 0, y: 20 }}
+              animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+              transition={{ delay: 0.2, duration: 0.8 }}
+            >
+              Professional Experience
+            </motion.h2>
+            <motion.p
+              className="text-gray-400 text-lg max-w-2xl mx-auto"
+              initial={{ opacity: 0, y: 20 }}
+              animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+              transition={{ delay: 0.3, duration: 0.8 }}
+            >
+              My journey in electrical engineering and aviation systems
+            </motion.p>
+          </div>
           
           {isLoading && (
             <div className="max-w-4xl mx-auto space-y-8">
@@ -41,9 +58,9 @@ export function Experience() {
                   initial={{ opacity: 0, x: -50 }}
                   animate={inView ? { opacity: 1, x: 0 } : { opacity: 0, x: -50 }}
                   transition={{ duration: 0.5, delay: index * 0.2 }}
-                  className="mb-12 bg-gray-900 rounded-lg p-6 shadow-xl"
+                  className="mb-12 bg-[#353748] rounded-2xl p-6 hover:bg-[#3d3f52] transition-colors duration-300"
                 >
-                  <h3 className="text-2xl font-bold text-blue-400">{exp.position}</h3>
+                  <h3 className="text-2xl font-bold text-[#ff4757]">{exp.position}</h3>
                   <p className="text-gray-400 mb-4">
                     {exp.company} | {exp.current ? 'Present' : new Date(exp.endDate!).getFullYear()}
                     {exp.location && ` | ${exp.location}`}
@@ -59,7 +76,7 @@ export function Experience() {
                   {exp.technologies && exp.technologies.length > 0 && (
                     <div className="flex flex-wrap gap-2 mt-4">
                       {exp.technologies.map((tech, i) => (
-                        <span key={i} className="bg-blue-500/20 text-blue-400 px-2 py-1 rounded text-sm">{tech}</span>
+                        <span key={i} className="bg-[#ff4757]/20 text-[#ff6b81] px-3 py-1 rounded-full text-sm">{tech}</span>
                       ))}
                     </div>
                   )}

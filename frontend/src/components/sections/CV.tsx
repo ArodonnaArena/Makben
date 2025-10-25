@@ -10,7 +10,7 @@ export function CV() {
   })
 
   return (
-    <section id="cv" className="py-20 bg-gray-800">
+    <section id="cv" className="py-20 bg-[#2b2d3a]">
       <div className="container mx-auto px-4">
         <motion.div
           ref={ref}
@@ -19,37 +19,56 @@ export function CV() {
           transition={{ duration: 0.8 }}
           className="max-w-4xl mx-auto text-center"
         >
-          <h2 className="text-4xl font-bold text-white mb-8">Curriculum Vitae</h2>
+          <div className="text-center mb-16">
+            <motion.h2
+              className="text-4xl md:text-5xl font-bold text-white mb-4"
+              initial={{ opacity: 0, y: 20 }}
+              animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+              transition={{ delay: 0.2, duration: 0.8 }}
+            >
+              Curriculum Vitae
+            </motion.h2>
+            <motion.p
+              className="text-gray-400 text-lg"
+              initial={{ opacity: 0, y: 20 }}
+              animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+              transition={{ delay: 0.3, duration: 0.8 }}
+            >
+              Get a detailed overview of my professional experience, skills, and qualifications
+            </motion.p>
+          </div>
           
-          <div className="bg-gray-900 p-8 rounded-xl shadow-xl">
-            <div className="mb-8">
-              <h3 className="text-2xl text-blue-400 mb-4">Download or View My CV</h3>
-              <p className="text-gray-300 mb-6">
-                Get a detailed overview of my professional experience, skills, and qualifications.
-              </p>
-            </div>
-
+          <motion.div 
+            className="bg-[#353748] p-8 rounded-2xl"
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={inView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.95 }}
+            transition={{ delay: 0.4, duration: 0.8 }}
+          >
             <div className="flex flex-col sm:flex-row justify-center gap-4">
-              <a
+              <motion.a
                 href="/documents/makanjuola_cv.pdf"
                 download
-                className="inline-flex items-center justify-center px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors"
+                className="inline-flex items-center justify-center px-8 py-4 bg-[#ff4757] hover:bg-[#ff6b81] text-white rounded-full font-semibold transition-colors text-lg"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
               >
                 <ArrowDownTrayIcon className="w-5 h-5 mr-2" />
                 Download CV
-              </a>
+              </motion.a>
               
-              <a
+              <motion.a
                 href="/documents/makanjuola_cv.pdf"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center px-6 py-3 bg-gray-700 hover:bg-gray-600 text-white rounded-lg transition-colors"
+                className="inline-flex items-center justify-center px-8 py-4 border-2 border-[#ff4757] text-white rounded-full font-semibold hover:bg-[#ff4757] transition-all text-lg"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
               >
                 <EyeIcon className="w-5 h-5 mr-2" />
                 View CV
-              </a>
+              </motion.a>
             </div>
-          </div>
+          </motion.div>
         </motion.div>
       </div>
     </section>

@@ -1,6 +1,6 @@
 import useSWR from 'swr';
-import { profileAPI, projectsAPI, skillsAPI, experiencesAPI, achievementsAPI } from '@/lib/api';
-import type { Profile, Project, Skill, Experience, Achievement } from '@/types';
+import { profileAPI, projectsAPI, skillsAPI, experiencesAPI, achievementsAPI, videosAPI, servicesAPI } from '@/lib/api';
+import type { Profile, Project, Skill, Experience, Achievement, Video, Service } from '@/types';
 
 // Profile hook
 export function useProfile() {
@@ -96,6 +96,24 @@ export function useExperiences() {
   };
 }
 
+// Services hook
+export function useServices() {
+  const { data, error, isLoading, mutate } = useSWR<Service[]>(
+    '/services',
+    servicesAPI.getAll,
+    {
+      revalidateOnFocus: false,
+    }
+  );
+
+  return {
+    services: data || [],
+    isLoading,
+    isError: error,
+    mutate,
+  };
+}
+
 // Achievements hooks
 export function useAchievements(params?: { category?: string; featured?: boolean }) {
   const key = params ? ['/achievements', params] : '/achievements';
@@ -110,6 +128,43 @@ export function useAchievements(params?: { category?: string; featured?: boolean
 
   return {
     achievements: data || [],
+    isLoading,
+    isError: error,
+    mutate,
+  };
+}
+
+// Videos hooks
+export function useVideos(params?: { category?: string; featured?: boolean; tags?: string }) {
+  const key = params ? ['/videos', params] : '/videos';
+  
+  const { data, error, isLoading, mutate } = useSWR<Video[]>(
+    key,
+    () => videosAPI.getAll(params),
+    {
+      revalidateOnFocus: false,
+    }
+  );
+
+  return {
+    videos: data || [],
+    isLoading,
+    isError: error,
+    mutate,
+  };
+}
+
+export function useVideo(id: string | null) {
+  const { data, error, isLoading, mutate } = useSWR<Video>(
+    id ? `/videos/${id}` : null,
+    () => (id ? videosAPI.getOne(id) : null),
+    {
+      revalidateOnFocus: false,
+    }
+  );
+
+  return {
+    video: data,
     isLoading,
     isError: error,
     mutate,
