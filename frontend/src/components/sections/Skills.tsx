@@ -1,8 +1,7 @@
 "use client"
-import { motion, useScroll, useTransform } from 'framer-motion'
+import { motion } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
 import { useState, useMemo } from 'react'
-import { ParticleSystem, FloatingShapes } from '../ui/ParticleSystem'
 import { useSkills } from '@/hooks/useData'
 import { SkillCardSkeleton } from '../ui/LoadingSkeleton'
 
@@ -29,8 +28,6 @@ export function Skills() {
   })
   
   const [hoveredSkill, setHoveredSkill] = useState<string | null>(null)
-  const { scrollYProgress } = useScroll()
-  const y = useTransform(scrollYProgress, [0, 1], [0, -100])
   
   // Fetch skills from API
   const { skills, isLoading, isError } = useSkills()

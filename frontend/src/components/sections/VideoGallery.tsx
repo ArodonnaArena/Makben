@@ -15,7 +15,7 @@ export function VideoGallery() {
   })
   
   const { videos, isLoading, isError } = useVideos()
-  const [selectedVideo, setSelectedVideo] = useState<any | null>(null)
+  const [selectedVideo, setSelectedVideo] = useState<typeof videos[0] | null>(null)
   const [selectedCategory, setSelectedCategory] = useState<string>('All')
 
   const categories = ['All', 'Project Demo', 'Tutorial', 'Presentation', 'Interview', 'Event', 'Other']

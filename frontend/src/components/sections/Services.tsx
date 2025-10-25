@@ -5,7 +5,7 @@ import { Zap, Wrench, Settings, Radio, Lightbulb, Shield } from 'lucide-react'
 import { useServices } from '@/hooks/useData'
 
 // Icon mapping
-const iconMap: Record<string, any> = {
+const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
   Zap,
   Wrench,
   Settings,

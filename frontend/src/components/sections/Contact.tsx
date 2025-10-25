@@ -1,7 +1,7 @@
 "use client"
 import { motion } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
-import { useState, useMemo } from 'react'
+import { useState } from 'react'
 import { useProfile } from '@/hooks/useData'
 
 export function Contact() {

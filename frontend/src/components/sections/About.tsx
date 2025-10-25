@@ -2,7 +2,7 @@
 import { motion } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
 import Image from 'next/image'
-import { useMemo } from 'react'
+import { useMemo, useCallback } from 'react'
 import { useProfile } from '@/hooks/useData'
 import { Calendar, MapPin, Book, GraduationCap, Mail, Phone } from 'lucide-react'
 
@@ -17,7 +17,7 @@ export function About() {
   const { profile } = useProfile()
 
   // Format location
-  const formatLocation = () => {
+  const formatLocation = useCallback(() => {
     if (!profile?.location) return "Abuja, Nigeria"
     const parts = [
       profile.location.city,
@@ -25,7 +25,7 @@ export function About() {
       profile.location.country
     ].filter(Boolean)
     return parts.length > 0 ? parts.join(", ") : "Abuja, Nigeria"
-  }
+  }, [profile])
   
   const personalInfo = useMemo(() => {
     const info = []
@@ -71,7 +71,7 @@ export function About() {
     info.push({ icon: Phone, label: "Phone", value: phone })
     
     return info
-  }, [profile])
+  }, [profile, formatLocation])
 
   return (
     <section id="about" className="py-20 bg-[#1e1e2e] relative overflow-hidden">
