@@ -157,18 +157,12 @@ export default function ProfilePage() {
         profileImagePath = imageRes.data.profileImage
       }
 
-      // Update or create profile
+      // Update profile (backend always uses PUT /profile, not /profile/:id)
       const profileData = { ...formData, profileImage: profileImagePath }
       
-      if (profile?._id) {
-        await api.put(`/profile/${profile._id}`, profileData, {
-          headers: { Authorization: `Bearer ${token}` }
-        })
-      } else {
-        await api.post('/profile', profileData, {
-          headers: { Authorization: `Bearer ${token}` }
-        })
-      }
+      await api.put('/profile', profileData, {
+        headers: { Authorization: `Bearer ${token}` }
+      })
 
       // Revalidate cache
       mutate('/profile')
