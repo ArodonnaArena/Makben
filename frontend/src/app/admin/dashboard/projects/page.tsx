@@ -112,7 +112,11 @@ export default function ProjectsPage() {
       outcomes: project.outcomes || []
     })
     if (project.imageUrl) {
-      setImagePreview(`${API_URL}${project.imageUrl}`)
+      // Only add API URL if it's not an external URL
+      const imageUrl = project.imageUrl.startsWith('http') 
+        ? project.imageUrl 
+        : `${API_URL}${project.imageUrl}`
+      setImagePreview(imageUrl)
     }
     setEditingId(project._id)
     setIsFormOpen(true)

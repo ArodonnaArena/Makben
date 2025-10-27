@@ -95,7 +95,11 @@ export default function AchievementsPage() {
       featured: achievement.featured || false
     })
     if (achievement.imageUrl) {
-      setImagePreview(`${API_URL}${achievement.imageUrl}`)
+      // Only add API URL if it's not an external URL
+      const imageUrl = achievement.imageUrl.startsWith('http') 
+        ? achievement.imageUrl 
+        : `${API_URL}${achievement.imageUrl}`
+      setImagePreview(imageUrl)
     }
     setEditingId(achievement._id)
     setIsFormOpen(true)

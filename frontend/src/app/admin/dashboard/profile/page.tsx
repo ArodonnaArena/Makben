@@ -45,9 +45,41 @@ export default function ProfilePage() {
 
   useEffect(() => {
     if (profile) {
-      setFormData(profile)
+      // Map backend profile structure to form structure
+      setFormData({
+        name: `${profile.firstName || ''} ${profile.lastName || ''}`.trim(),
+        title: profile.title || '',
+        company: profile.company || '',
+        tagline: profile.tagline || '',
+        bio: profile.bio || '',
+        contact: {
+          email: profile.email || '',
+          phone: profile.phone || '',
+          location: profile.location?.city || profile.location?.country || ''
+        },
+        socialLinks: {
+          linkedin: profile.social?.linkedin || '',
+          github: profile.social?.github || '',
+          twitter: profile.social?.twitter || '',
+          website: profile.social?.website || ''
+        },
+        skills: {
+          technical: profile.skills?.technical || [],
+          soft: profile.skills?.soft || []
+        },
+        stats: {
+          yearsOfExperience: profile.stats?.yearsOfExperience || 0,
+          projectsCompleted: profile.stats?.projectsCompleted || 0,
+          certificationsEarned: profile.stats?.certificationsEarned || 0,
+          clientsSatisfied: profile.stats?.clientsSatisfied || 0
+        }
+      })
       if (profile.profileImage) {
-        setImagePreview(`${process.env.NEXT_PUBLIC_API_URL?.replace('/api', '')}${profile.profileImage}`)
+        // Only add API URL if it's not an external URL
+        const imageUrl = profile.profileImage.startsWith('http') 
+          ? profile.profileImage 
+          : `${process.env.NEXT_PUBLIC_API_URL?.replace('/api', '')}${profile.profileImage}`
+        setImagePreview(imageUrl)
       }
     }
   }, [profile])
