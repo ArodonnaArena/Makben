@@ -142,26 +142,48 @@ export default function ProfilePage() {
     try {
       const token = localStorage.getItem('adminToken')
       
-      // Upload image if new one is selected
-      let profileImagePath = formData.profileImage
-      if (imageFile) {
-        const imageFormData = new FormData()
-        imageFormData.append('profileImage', imageFile)
-        
-        const imageRes = await api.post('/profile/upload-image', imageFormData, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            'Content-Type': 'multipart/form-data'
-          }
-        })
-        profileImagePath = imageRes.data.profileImage
-      }
-
-      // Update profile (backend always uses PUT /profile, not /profile/:id)
-      const profileData = { ...formData, profileImage: profileImagePath }
+      // Create FormData for multipart upload
+      const submitFormData = new FormData()
       
-      await api.put('/profile', profileData, {
-        headers: { Authorization: `Bearer ${token}` }
+      // Add image file if selected
+      if (imageFile) {
+        submitFormData.append('profileImage', imageFile)
+      }
+      
+      // Split name into firstName and lastName
+      const nameParts = formData.name.trim().split(' ')
+      const firstName = nameParts[0] || ''
+      const lastName = nameParts.slice(1).join(' ') || nameParts[0] || ''
+      
+      // Add all form fields to match backend Profile schema
+      submitFormData.append('firstName', firstName)
+      submitFormData.append('lastName', lastName)
+      submitFormData.append('title', formData.title)
+      submitFormData.append('company', formData.company)
+      submitFormData.append('tagline', formData.tagline)
+      submitFormData.append('bio', formData.bio)
+      
+      // Backend expects email and phone at root level, not nested
+      submitFormData.append('email', formData.contact.email)
+      submitFormData.append('phone', formData.contact.phone)
+      
+      // Location as nested object
+      submitFormData.append('location', JSON.stringify({
+        city: formData.contact.location,
+        country: formData.contact.location
+      }))
+      
+      // Social links (backend uses 'social', not 'socialLinks')
+      submitFormData.append('social', JSON.stringify(formData.socialLinks))
+      submitFormData.append('skills', JSON.stringify(formData.skills))
+      submitFormData.append('stats', JSON.stringify(formData.stats))
+      
+      // Update profile with multipart data
+      await api.put('/profile', submitFormData, {
+        headers: { 
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'multipart/form-data'
+        }
       })
 
       // Revalidate cache
