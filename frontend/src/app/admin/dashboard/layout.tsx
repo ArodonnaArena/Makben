@@ -25,7 +25,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
   return (
     <ProtectedRoute>
-      <div className="min-h-screen bg-gray-900 flex">
+      <div className="min-h-screen bg-gray-900 flex pt-24">
         {/* Sidebar */}
         <aside className={`${isSidebarOpen ? 'w-64' : 'w-20'} bg-gray-800 border-r border-gray-700 transition-all duration-300 flex flex-col`}>
           <div className="p-6 border-b border-gray-700">
