@@ -45,14 +45,10 @@ export default function SkillsPage() {
       const token = localStorage.getItem('adminToken')
 
       if (editingId) {
-        await api.put(`/skills/${editingId}`, formData, {
-          headers: { Authorization: `Bearer ${token}` }
-        })
+        await api.put(`/skills/${editingId}`, formData)
         setMessage({ type: 'success', text: 'Skill updated successfully!' })
       } else {
-        await api.post('/skills', formData, {
-          headers: { Authorization: `Bearer ${token}` }
-        })
+        await api.post('/skills', formData)
         setMessage({ type: 'success', text: 'Skill created successfully!' })
       }
 
