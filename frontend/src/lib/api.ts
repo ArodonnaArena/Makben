@@ -43,6 +43,27 @@ export const authAPI = {
     const response = await api.put('/auth/change-password', data);
     return response.data;
   },
+
+  // Superadmin user management
+  listUsers: async (): Promise<{ users: Array<{ id: string; email: string; name: string; role: string }> }> => {
+    const response = await api.get('/auth/users');
+    return response.data;
+  },
+
+  createUser: async (data: { email: string; password: string; name: string; role: 'admin' | 'viewer' }) => {
+    const response = await api.post('/auth/users', data);
+    return response.data;
+  },
+
+  updateUserRole: async (id: string, role: 'admin' | 'viewer') => {
+    const response = await api.put(`/auth/users/${id}/role`, { role });
+    return response.data;
+  },
+
+  deleteUser: async (id: string) => {
+    const response = await api.delete(`/auth/users/${id}`);
+    return response.data;
+  },
 };
 
 // Profile API
