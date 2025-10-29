@@ -1,7 +1,7 @@
 "use client"
 import { ProtectedRoute } from '@/components/admin/ProtectedRoute'
 import { useRouter } from 'next/navigation'
-import { Home, User, Briefcase, FolderKanban, Award, Code, LogOut } from 'lucide-react'
+import { Home, User, Briefcase, FolderKanban, Award, Code, Video, LogOut } from 'lucide-react'
 import Link from 'next/link'
 import { useState } from 'react'
 
@@ -12,6 +12,7 @@ const navItems = [
   { icon: FolderKanban, label: 'Projects', href: '/admin/dashboard/projects' },
   { icon: Code, label: 'Skills', href: '/admin/dashboard/skills' },
   { icon: Award, label: 'Achievements', href: '/admin/dashboard/achievements' },
+  { icon: Video, label: 'Videos', href: '/admin/dashboard/videos' },
 ]
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
