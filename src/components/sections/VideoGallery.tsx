@@ -32,7 +32,7 @@ export function VideoGallery() {
 
   if (isError) {
     return (
-      <section id="videos" className="py-20 bg-[#2b2d3a]">
+      <section id="videos" className="py-20 bg-[#12131f]">
         <div className="container mx-auto px-4 text-center">
           <p className="text-red-400">Failed to load videos</p>
         </div>
@@ -41,7 +41,7 @@ export function VideoGallery() {
   }
 
   return (
-    <section id="videos" className="py-20 bg-[#2b2d3a]">
+    <section id="videos" className="py-20 bg-[#12131f]">
       <div className="container mx-auto px-4">
         <motion.div
           ref={ref}
@@ -82,8 +82,8 @@ export function VideoGallery() {
                 onClick={() => setSelectedCategory(category)}
                 className={`px-4 py-2 rounded-full font-medium transition-all ${
                   selectedCategory === category
-                    ? 'bg-[#ff4757] text-white'
-                    : 'bg-[#353748] text-gray-300 hover:bg-[#3d3f52] hover:text-white'
+                    ? 'bg-[#8b5cf6] text-white'
+                    : 'bg-[#1a1c2e] text-gray-300 hover:bg-[#262a45] hover:text-white'
                 }`}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
@@ -97,11 +97,11 @@ export function VideoGallery() {
           {isLoading && (
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
               {[...Array(6)].map((_, i) => (
-                <div key={i} className="bg-[#353748] rounded-2xl overflow-hidden animate-pulse">
-                  <div className="h-48 bg-[#3d3f52]"></div>
+                <div key={i} className="bg-[#1a1c2e] rounded-2xl overflow-hidden animate-pulse">
+                  <div className="h-48 bg-[#262a45]"></div>
                   <div className="p-4 space-y-3">
-                    <div className="h-4 bg-[#3d3f52] rounded"></div>
-                    <div className="h-3 bg-[#3d3f52] rounded w-3/4"></div>
+                    <div className="h-4 bg-[#262a45] rounded"></div>
+                    <div className="h-3 bg-[#262a45] rounded w-3/4"></div>
                   </div>
                 </div>
               ))}
@@ -117,7 +117,7 @@ export function VideoGallery() {
                   initial={{ opacity: 0, scale: 0.9 }}
                   animate={inView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }}
                   transition={{ duration: 0.5, delay: index * 0.1 }}
-                  className="bg-[#353748] rounded-2xl overflow-hidden hover:transform hover:-translate-y-2 transition-all duration-300 cursor-pointer group"
+                  className="bg-[#1a1c2e] rounded-2xl overflow-hidden hover:transform hover:-translate-y-2 transition-all duration-300 cursor-pointer group"
                   onClick={() => setSelectedVideo(video)}
                 >
                   <div className="relative h-48 bg-gray-700">

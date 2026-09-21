@@ -59,9 +59,9 @@ export function DNAHelix({ className = '' }: { className?: string }) {
             className="absolute w-4 h-4 rounded-full"
             style={{
               background: `linear-gradient(135deg, 
-                ${i % 2 === 0 ? '#3b82f6' : '#d946ef'}, 
+                ${i % 2 === 0 ? '#8b5cf6' : '#d946ef'}, 
                 ${i % 2 === 0 ? '#06b6d4' : '#f97316'})`,
-              boxShadow: `0 0 20px ${i % 2 === 0 ? '#3b82f6' : '#d946ef'}`,
+              boxShadow: `0 0 20px ${i % 2 === 0 ? '#8b5cf6' : '#d946ef'}`,
             }}
             animate={{
               x: [
@@ -133,7 +133,7 @@ export function MatrixRain({ className = '' }: { className?: string }) {
           style={{
             left: `${(i / columns) * 100}%`,
             height: '100%',
-            background: 'linear-gradient(transparent, #3b82f6, transparent)',
+            background: 'linear-gradient(transparent, #8b5cf6, transparent)',
           }}
           initial={{ y: '-100%' }}
           animate={{ y: '100%' }}
@@ -251,7 +251,7 @@ export function ParticleExplosion({ trigger = false, className = '' }: { trigger
             key={i}
             className="absolute top-1/2 left-1/2 w-2 h-2 rounded-full"
             style={{
-              background: `linear-gradient(135deg, #3b82f6, #d946ef)`,
+              background: `linear-gradient(135deg, #8b5cf6, #d946ef)`,
             }}
             initial={{ x: 0, y: 0, opacity: 0 }}
             animate={

@@ -10,7 +10,7 @@ export function CV() {
   })
 
   return (
-    <section id="cv" className="py-20 bg-[#2b2d3a]">
+    <section id="cv" className="py-20 bg-[#12131f]">
       <div className="container mx-auto px-4">
         <motion.div
           ref={ref}
@@ -39,7 +39,7 @@ export function CV() {
           </div>
           
           <motion.div 
-            className="bg-[#353748] p-8 rounded-2xl"
+            className="bg-[#1a1c2e] p-8 rounded-2xl"
             initial={{ opacity: 0, scale: 0.95 }}
             animate={inView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.95 }}
             transition={{ delay: 0.4, duration: 0.8 }}
@@ -48,7 +48,7 @@ export function CV() {
               <motion.a
                 href="/documents/makanjuola_cv.pdf"
                 download
-                className="inline-flex items-center justify-center px-8 py-4 bg-[#ff4757] hover:bg-[#ff6b81] text-white rounded-full font-semibold transition-colors text-lg"
+                className="inline-flex items-center justify-center px-8 py-4 bg-[#8b5cf6] hover:bg-[#22d3ee] text-white rounded-full font-semibold transition-colors text-lg"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
@@ -60,7 +60,7 @@ export function CV() {
                 href="/documents/makanjuola_cv.pdf"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center px-8 py-4 border-2 border-[#ff4757] text-white rounded-full font-semibold hover:bg-[#ff4757] transition-all text-lg"
+                className="inline-flex items-center justify-center px-8 py-4 border-2 border-[#8b5cf6] text-white rounded-full font-semibold hover:bg-[#8b5cf6] transition-all text-lg"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >

@@ -11,7 +11,7 @@ import { Contact } from '../components/sections/Contact'
 
 export default function Home() {
   return (
-    <div className="relative min-h-screen bg-[#1e1e2e]">
+    <div className="relative min-h-screen bg-[#07070f]">
       {/* Content Sections */}
       <Hero />
       <Services />

@@ -27,7 +27,7 @@ export function Projects() {
       )
 
   return (
-    <section id="projects" className="py-20 bg-[#1e1e2e] relative overflow-hidden">
+    <section id="projects" className="py-20 bg-[#07070f] relative overflow-hidden">
       <div className="container mx-auto px-4">
         <motion.div
           ref={ref}
@@ -68,8 +68,8 @@ export function Projects() {
                 onClick={() => setSelectedCategory(category)}
                 className={`px-6 py-2 rounded-full font-medium transition-all ${
                   selectedCategory === category
-                    ? 'bg-[#ff4757] text-white'
-                    : 'bg-[#2b2d3a] text-gray-400 hover:bg-[#353748] hover:text-white'
+                    ? 'bg-[#8b5cf6] text-white'
+                    : 'bg-[#12131f] text-gray-400 hover:bg-[#1a1c2e] hover:text-white'
                 }`}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
@@ -112,7 +112,7 @@ export function Projects() {
                   initial={{ opacity: 0, scale: 0.9 }}
                   animate={inView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }}
                   transition={{ duration: 0.5, delay: index * 0.1 }}
-                  className="group bg-[#2b2d3a] rounded-2xl overflow-hidden hover:transform hover:-translate-y-2 transition-all duration-300"
+                  className="group bg-[#12131f] rounded-2xl overflow-hidden hover:transform hover:-translate-y-2 transition-all duration-300"
                   whileHover={{ y: -8 }}
                 >
                   {project.imageUrl && (
@@ -123,20 +123,20 @@ export function Projects() {
                         fill
                         className="object-cover group-hover:scale-110 transition-transform duration-500"
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-[#2b2d3a] via-transparent to-transparent opacity-60" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-[#12131f] via-transparent to-transparent opacity-60" />
                     </div>
                   )}
                   <div className="p-6">
-                    <h3 className="text-xl font-bold text-white mb-3 group-hover:text-[#ff4757] transition-colors">{project.title}</h3>
+                    <h3 className="text-xl font-bold text-white mb-3 group-hover:text-[#8b5cf6] transition-colors">{project.title}</h3>
                     <p className="text-gray-400 mb-4 line-clamp-2">{project.shortDescription || project.description}</p>
                     <div className="flex flex-wrap gap-2">
                       {project.technologies.slice(0, 3).map((tech, idx) => (
-                        <span key={idx} className="bg-[#353748] text-gray-300 px-3 py-1 rounded-full text-xs">
+                        <span key={idx} className="bg-[#1a1c2e] text-gray-300 px-3 py-1 rounded-full text-xs">
                           {tech}
                         </span>
                       ))}
                       {project.technologies.length > 3 && (
-                        <span className="bg-[#353748] text-gray-300 px-3 py-1 rounded-full text-xs">
+                        <span className="bg-[#1a1c2e] text-gray-300 px-3 py-1 rounded-full text-xs">
                           +{project.technologies.length - 3}
                         </span>
                       )}

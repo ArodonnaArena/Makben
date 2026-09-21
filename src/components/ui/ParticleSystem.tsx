@@ -20,7 +20,7 @@ interface ParticleSystemProps {
 
 export function ParticleSystem({ 
   count = 30, 
-  colors = ['#3b82f6', '#06b6d4', '#d946ef', '#10b981'],
+  colors = ['#8b5cf6', '#06b6d4', '#d946ef', '#10b981'],
   className = ''
 }: ParticleSystemProps) {
   const [mounted, setMounted] = useState(false)

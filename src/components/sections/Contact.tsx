@@ -34,7 +34,7 @@ export function Contact() {
   }
 
   return (
-    <section id="contact" className="py-20 bg-[#2b2d3a] relative overflow-hidden">
+    <section id="contact" className="py-20 bg-[#12131f] relative overflow-hidden">
       <div className="container mx-auto px-4">
         <motion.div
           ref={ref}
@@ -80,7 +80,7 @@ export function Contact() {
                   value={formData.name}
                   onChange={handleChange}
                   placeholder="Name"
-                  className="w-full bg-transparent border-2 border-[#ff4757] rounded-lg px-6 py-4 text-white placeholder-gray-400 focus:outline-none focus:border-[#ff6b81] transition-colors"
+                  className="w-full bg-transparent border-2 border-[#8b5cf6] rounded-lg px-6 py-4 text-white placeholder-gray-400 focus:outline-none focus:border-[#22d3ee] transition-colors"
                   required
                 />
               </div>
@@ -93,7 +93,7 @@ export function Contact() {
                   value={formData.email}
                   onChange={handleChange}
                   placeholder="Email"
-                  className="w-full bg-transparent border-2 border-[#ff4757] rounded-lg px-6 py-4 text-white placeholder-gray-400 focus:outline-none focus:border-[#ff6b81] transition-colors"
+                  className="w-full bg-transparent border-2 border-[#8b5cf6] rounded-lg px-6 py-4 text-white placeholder-gray-400 focus:outline-none focus:border-[#22d3ee] transition-colors"
                   required
                 />
               </div>
@@ -107,7 +107,7 @@ export function Contact() {
                 value={formData.subject}
                 onChange={handleChange}
                 placeholder="Subject"
-                className="w-full bg-transparent border-2 border-[#ff4757] rounded-lg px-6 py-4 text-white placeholder-gray-400 focus:outline-none focus:border-[#ff6b81] transition-colors"
+                className="w-full bg-transparent border-2 border-[#8b5cf6] rounded-lg px-6 py-4 text-white placeholder-gray-400 focus:outline-none focus:border-[#22d3ee] transition-colors"
                 required
               />
             </div>
@@ -119,7 +119,7 @@ export function Contact() {
                 value={formData.message}
                 onChange={handleChange}
                 placeholder="Message"
-                className="w-full bg-transparent border-2 border-[#ff4757] rounded-lg px-6 py-4 text-white placeholder-gray-400 focus:outline-none focus:border-[#ff6b81] transition-colors h-40 resize-none"
+                className="w-full bg-transparent border-2 border-[#8b5cf6] rounded-lg px-6 py-4 text-white placeholder-gray-400 focus:outline-none focus:border-[#22d3ee] transition-colors h-40 resize-none"
                 required
               ></textarea>
             </div>
@@ -128,7 +128,7 @@ export function Contact() {
             <div className="text-center">
               <motion.button
                 type="submit"
-                className="px-12 py-4 bg-[#ff4757] hover:bg-[#ff6b81] text-white rounded-full font-semibold text-lg transition-colors"
+                className="px-12 py-4 bg-[#8b5cf6] hover:bg-[#22d3ee] text-white rounded-full font-semibold text-lg transition-colors"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >

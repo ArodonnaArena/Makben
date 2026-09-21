@@ -7,11 +7,11 @@ import { SkillCardSkeleton } from '../ui/LoadingSkeleton'
 
 // Category configuration for styling
 const categoryConfig: Record<string, { icon: string; color: string }> = {
-  "Technical Expertise": { icon: "⚡", color: "from-[#ff4757] to-[#ff6b81]" },
-  "Software & Tools": { icon: "🛠️", color: "from-[#ff4757] to-[#ff6b81]" },
-  "Leadership & Management": { icon: "👥", color: "from-[#ff4757] to-[#ff6b81]" },
-  "Programming": { icon: "💻", color: "from-[#ff4757] to-[#ff6b81]" },
-  "Design": { icon: "🎨", color: "from-[#ff4757] to-[#ff6b81]" },
+  "Technical Expertise": { icon: "⚡", color: "from-[#8b5cf6] to-[#22d3ee]" },
+  "Software & Tools": { icon: "🛠️", color: "from-[#8b5cf6] to-[#22d3ee]" },
+  "Leadership & Management": { icon: "👥", color: "from-[#8b5cf6] to-[#22d3ee]" },
+  "Programming": { icon: "💻", color: "from-[#8b5cf6] to-[#22d3ee]" },
+  "Design": { icon: "🎨", color: "from-[#8b5cf6] to-[#22d3ee]" },
 }
 
 const certifications = [
@@ -51,7 +51,7 @@ export function Skills() {
   }, [skills])
 
   return (
-    <section id="skills" className="py-20 bg-[#1e1e2e] relative overflow-hidden">
+    <section id="skills" className="py-20 bg-[#07070f] relative overflow-hidden">
       <div className="container mx-auto px-4 relative z-10">
         <motion.div
           ref={ref}
@@ -110,7 +110,7 @@ export function Skills() {
               {skillCategories.map((skillSet, categoryIndex) => (
               <motion.div
                 key={categoryIndex}
-                className="bg-[#2b2d3a] rounded-2xl p-6 group"
+                className="bg-[#12131f] rounded-2xl p-6 group"
                 initial={{ opacity: 0, y: 50 }}
                 animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
                 transition={{ delay: categoryIndex * 0.2, duration: 0.8 }}
@@ -163,7 +163,7 @@ export function Skills() {
                       </div>
                       
                       {/* Progress Bar */}
-                      <div className="relative h-3 bg-[#353748] rounded-full overflow-hidden">
+                      <div className="relative h-3 bg-[#1a1c2e] rounded-full overflow-hidden">
                         <motion.div
                           className={`absolute inset-y-0 left-0 bg-gradient-to-r ${skillSet.color} rounded-full`}
                           initial={{ width: 0 }}
@@ -220,7 +220,7 @@ export function Skills() {
               {certifications.map((cert, index) => (
                 <motion.div
                   key={index}
-                  className="bg-[#2b2d3a] rounded-xl p-6 text-center group hover:bg-[#353748] border-2 border-transparent hover:border-[#ff4757] transition-all duration-300"
+                  className="bg-[#12131f] rounded-xl p-6 text-center group hover:bg-[#1a1c2e] border-2 border-transparent hover:border-[#8b5cf6] transition-all duration-300"
                   initial={{ opacity: 0, scale: 0.8 }}
                   animate={inView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.8 }}
                   transition={{ delay: 1 + index * 0.1, duration: 0.5 }}
@@ -233,7 +233,7 @@ export function Skills() {
                   >
                     {cert.icon}
                   </motion.div>
-                  <h4 className="font-semibold text-white mb-2 group-hover:text-[#ff4757] transition-colors duration-300">
+                  <h4 className="font-semibold text-white mb-2 group-hover:text-[#8b5cf6] transition-colors duration-300">
                     {cert.name}
                   </h4>
                   <p className="text-gray-400 text-sm">{cert.year}</p>

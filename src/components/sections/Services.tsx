@@ -60,7 +60,7 @@ export function Services() {
   const displayServices = services.length > 0 ? services : defaultServices
 
   return (
-    <section id="services" className="py-20 bg-[#2b2d3a] relative overflow-hidden">
+    <section id="services" className="py-20 bg-[#12131f] relative overflow-hidden">
       <div className="container mx-auto px-4">
         <motion.div
           ref={ref}
@@ -93,10 +93,10 @@ export function Services() {
           {isLoading && (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {[...Array(6)].map((_, i) => (
-                <div key={i} className="bg-[#353748] rounded-2xl p-8 animate-pulse">
-                  <div className="w-16 h-16 rounded-full bg-[#3d3f52] mx-auto mb-6"></div>
-                  <div className="h-6 bg-[#3d3f52] rounded mb-3"></div>
-                  <div className="h-4 bg-[#3d3f52] rounded"></div>
+                <div key={i} className="bg-[#1a1c2e] rounded-2xl p-8 animate-pulse">
+                  <div className="w-16 h-16 rounded-full bg-[#262a45] mx-auto mb-6"></div>
+                  <div className="h-6 bg-[#262a45] rounded mb-3"></div>
+                  <div className="h-4 bg-[#262a45] rounded"></div>
                 </div>
               ))}
             </div>
@@ -123,10 +123,10 @@ export function Services() {
                     transition={{ delay: 0.4 + index * 0.1, duration: 0.6 }}
                     className="group"
                   >
-                    <div className="bg-[#353748] rounded-2xl p-8 text-center hover:bg-[#3d3f52] transition-all duration-300 h-full flex flex-col items-center justify-center">
+                    <div className="bg-[#1a1c2e] rounded-2xl p-8 text-center hover:bg-[#262a45] transition-all duration-300 h-full flex flex-col items-center justify-center">
                       {/* Icon */}
                       <motion.div
-                        className="w-16 h-16 rounded-full bg-[#ff4757] flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300"
+                        className="w-16 h-16 rounded-full bg-[#8b5cf6] flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300"
                         whileHover={{ rotate: 360 }}
                         transition={{ duration: 0.6 }}
                       >

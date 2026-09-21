@@ -16,7 +16,7 @@ export function Achievements() {
   const { achievements, isLoading, isError } = useAchievements()
 
   return (
-    <section id="achievements" className="py-20 bg-[#1e1e2e]">
+    <section id="achievements" className="py-20 bg-[#07070f]">
       <div className="container mx-auto px-4">
         <motion.div
           ref={ref}
@@ -61,7 +61,7 @@ export function Achievements() {
                   initial={{ opacity: 0, scale: 0.9 }}
                   animate={inView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }}
                   transition={{ duration: 0.5, delay: index * 0.2 }}
-                  className="bg-[#2b2d3a] rounded-2xl overflow-hidden hover:transform hover:-translate-y-2 transition-all duration-300 group"
+                  className="bg-[#12131f] rounded-2xl overflow-hidden hover:transform hover:-translate-y-2 transition-all duration-300 group"
                 >
                   {achievement.imageUrl && (
                     <div className="relative h-48 overflow-hidden">
@@ -74,17 +74,17 @@ export function Achievements() {
                     </div>
                   )}
                   <div className="p-6">
-                    <div className="text-[#ff4757] text-sm mb-2 font-semibold">
+                    <div className="text-[#8b5cf6] text-sm mb-2 font-semibold">
                       {new Date(achievement.date).getFullYear()} | {achievement.category}
                     </div>
-                    <h3 className="text-xl font-bold text-white mb-2 group-hover:text-[#ff4757] transition-colors">{achievement.title}</h3>
+                    <h3 className="text-xl font-bold text-white mb-2 group-hover:text-[#8b5cf6] transition-colors">{achievement.title}</h3>
                     {achievement.issuer && (
                       <div className="text-gray-300 mb-3">{achievement.issuer}</div>
                     )}
                     <p className="text-gray-400">{achievement.description}</p>
                     {achievement.documentUrl && (
                       <a href={`${API_URL}${achievement.documentUrl}`} target="_blank" rel="noopener noreferrer"
-                         className="text-[#ff4757] hover:text-[#ff6b81] text-sm mt-4 inline-block">View Certificate →</a>
+                         className="text-[#8b5cf6] hover:text-[#22d3ee] text-sm mt-4 inline-block">View Certificate →</a>
                     )}
                   </div>
                 </motion.div>

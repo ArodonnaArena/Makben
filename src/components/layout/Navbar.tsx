@@ -2,15 +2,16 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { motion, AnimatePresence } from 'framer-motion'
+import { User, Briefcase, Zap, Trophy, FileText, Rocket, Mail } from 'lucide-react'
 
 const navItems = [
-  { name: 'About', href: '#about', icon: '👨‍💼' },
-  { name: 'Experience', href: '#experience', icon: '💼' },
-  { name: 'Skills', href: '#skills', icon: '⚡' },
-  { name: 'Achievements', href: '#achievements', icon: '🏆' },
-  { name: 'CV', href: '#cv', icon: '📄' },
-  { name: 'Projects', href: '#projects', icon: '🚀' },
-  { name: 'Contact', href: '#contact', icon: '📧' }
+  { name: 'About', href: '#about', icon: User },
+  { name: 'Experience', href: '#experience', icon: Briefcase },
+  { name: 'Skills', href: '#skills', icon: Zap },
+  { name: 'Achievements', href: '#achievements', icon: Trophy },
+  { name: 'CV', href: '#cv', icon: FileText },
+  { name: 'Projects', href: '#projects', icon: Rocket },
+  { name: 'Contact', href: '#contact', icon: Mail }
 ]
 
 export function Navbar() {
@@ -61,7 +62,7 @@ export function Navbar() {
             whileTap={{ scale: 0.95 }}
           >
             <Link href="/" className="relative group">
-              <span className="text-3xl font-bold gradient-text-static">ME</span>
+              <span className="text-3xl font-bold gradient-text-static font-display">ME<span className="text-white">.</span></span>
               <motion.div
                 className="absolute -bottom-1 left-0 w-full h-0.5 bg-gradient-to-r from-primary-500 to-electric-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-300"
                 initial={false}
@@ -87,7 +88,7 @@ export function Navbar() {
                   }`}
                 >
                   <span className="flex items-center space-x-2">
-                    <span className="text-lg">{item.icon}</span>
+                    <item.icon className="w-4 h-4" />
                     <span>{item.name}</span>
                   </span>
                   
@@ -189,8 +190,8 @@ export function Navbar() {
                       className="flex items-center space-x-3 p-3 rounded-xl hover:bg-primary-500/10 transition-colors duration-300 group"
                       onClick={() => setIsMobileMenuOpen(false)}
                     >
-                      <span className="text-2xl group-hover:scale-110 transition-transform duration-300">
-                        {item.icon}
+                      <span className="w-10 h-10 rounded-xl bg-primary-500/10 flex items-center justify-center group-hover:scale-110 group-hover:bg-primary-500/20 transition-all duration-300">
+                        <item.icon className="w-4 h-4 text-primary-300" />
                       </span>
                       <span className="text-white font-medium group-hover:text-primary-400 transition-colors duration-300">
                         {item.name}

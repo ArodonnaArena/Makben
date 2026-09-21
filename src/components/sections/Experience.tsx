@@ -13,7 +13,7 @@ export function Experience() {
   const { experiences, isLoading, isError } = useExperiences()
 
   return (
-    <section id="experience" className="py-20 bg-[#2b2d3a]">
+    <section id="experience" className="py-20 bg-[#12131f]">
       <div className="container mx-auto px-4">
         <motion.div
           ref={ref}
@@ -58,9 +58,9 @@ export function Experience() {
                   initial={{ opacity: 0, x: -50 }}
                   animate={inView ? { opacity: 1, x: 0 } : { opacity: 0, x: -50 }}
                   transition={{ duration: 0.5, delay: index * 0.2 }}
-                  className="mb-12 bg-[#353748] rounded-2xl p-6 hover:bg-[#3d3f52] transition-colors duration-300"
+                  className="mb-12 bg-[#1a1c2e] rounded-2xl p-6 hover:bg-[#262a45] transition-colors duration-300"
                 >
-                  <h3 className="text-2xl font-bold text-[#ff4757]">{exp.position}</h3>
+                  <h3 className="text-2xl font-bold text-[#8b5cf6]">{exp.position}</h3>
                   <p className="text-gray-400 mb-4">
                     {exp.company} | {exp.current ? 'Present' : new Date(exp.endDate!).getFullYear()}
                     {exp.location && ` | ${exp.location}`}
@@ -76,7 +76,7 @@ export function Experience() {
                   {exp.technologies && exp.technologies.length > 0 && (
                     <div className="flex flex-wrap gap-2 mt-4">
                       {exp.technologies.map((tech, i) => (
-                        <span key={i} className="bg-[#ff4757]/20 text-[#ff6b81] px-3 py-1 rounded-full text-sm">{tech}</span>
+                        <span key={i} className="bg-[#8b5cf6]/20 text-[#22d3ee] px-3 py-1 rounded-full text-sm">{tech}</span>
                       ))}
                     </div>
                   )}

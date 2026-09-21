@@ -74,7 +74,7 @@ export function About() {
   }, [profile, formatLocation])
 
   return (
-    <section id="about" className="py-20 bg-[#1e1e2e] relative overflow-hidden">
+    <section id="about" className="py-20 bg-[#07070f] relative overflow-hidden">
       <div className="container mx-auto px-4">
         <motion.div
           ref={ref}
@@ -157,12 +157,12 @@ export function About() {
                   return (
                     <motion.div
                       key={info.label}
-                      className="bg-[#2b2d3a] rounded-xl p-4 flex items-start space-x-3"
+                      className="bg-[#12131f] rounded-xl p-4 flex items-start space-x-3"
                       initial={{ opacity: 0, scale: 0.9 }}
                       animate={inView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }}
                       transition={{ delay: 1.2 + index * 0.1, duration: 0.5 }}
                     >
-                      <div className="w-10 h-10 rounded-lg bg-[#ff4757] flex items-center justify-center flex-shrink-0">
+                      <div className="w-10 h-10 rounded-lg bg-[#8b5cf6] flex items-center justify-center flex-shrink-0">
                         <Icon className="w-5 h-5 text-white" />
                       </div>
                       <div className="flex-1 min-w-0">
