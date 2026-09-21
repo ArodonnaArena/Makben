@@ -4,13 +4,30 @@ import mongoose from 'mongoose';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 
-const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/makben-portfolio';
+const MONGODB_URI = process.env.MONGODB_URI;
 
 let connected = false;
 
+export function hasDatabaseConfig() {
+  return Boolean(process.env.MONGODB_URI && process.env.MONGODB_URI.trim());
+}
+
 export async function connectDB() {
+  if (!hasDatabaseConfig()) {
+    throw new Error('MONGODB_URI is not configured for this deployment. Add the MongoDB connection string in Vercel or .env.local.');
+  }
+
+  if (mongoose.connection.readyState === 1) {
+    return;
+  }
+
+  if (mongoose.connection.readyState === 2) {
+    await mongoose.connection.asPromise();
+    return;
+  }
+
   if (!connected) {
-    await mongoose.connect(MONGODB_URI);
+    await mongoose.connect(MONGODB_URI as string);
     connected = true;
   }
 }

@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import {
   connectDB,
+  hasDatabaseConfig,
   User,
   Project,
   Skill,
@@ -23,6 +24,16 @@ function makeError(message: string, status = 400) {
   return NextResponse.json({ message }, { status });
 }
 
+function makeConfigError() {
+  return NextResponse.json(
+    {
+      message: 'Database is not configured for this deployment.',
+      details: 'Set MONGODB_URI and JWT_SECRET in your environment before using the API.',
+    },
+    { status: 503 }
+  );
+}
+
 async function requireAdmin(request: NextRequest) {
   const auth = request.headers.get('authorization');
   const user = getUserFromAuthorization(auth);
@@ -35,6 +46,7 @@ async function requireAdmin(request: NextRequest) {
 
 export async function GET(request: NextRequest, { params }: { params: Promise<{ slug?: string[] }> }) {
   try {
+    if (!hasDatabaseConfig()) return makeConfigError();
     await connectDB();
     const slug = parseSlug((await params).slug);
 
@@ -57,7 +69,51 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
 
     if (slug[0] === 'profile') {
       const profile = await Profile.findOne().lean();
-      if (!profile) return makeError('Profile not found', 404);
+      if (!profile) {
+        const defaultProfile = {
+          _id: 'default-profile',
+          name: 'Makanjuola Ebenezer',
+          firstName: 'Makanjuola',
+          lastName: 'Ebenezer',
+          title: 'Senior Electrical Engineer',
+          company: 'Nigerian Airspace Management Agency (NAMA)',
+          bio: 'Electrical Engineer specializing in aviation systems maintenance, power infrastructure, and operational reliability in Nigeria.',
+          tagline: 'Delivering reliable aviation and infrastructure solutions with precision and purpose.',
+          profileImage: '/images/profile.jpg',
+          resumeUrl: '',
+          email: 'makanjuola.ebenezer@nama.gov.ng',
+          phone: '+234 000 000 0000',
+          interests: ['Aviation Systems', 'Power Infrastructure', 'Maintenance', 'Project Leadership'],
+          location: {
+            city: 'Abuja',
+            state: 'Federal Capital Territory',
+            country: 'Nigeria',
+          },
+          social: {
+            linkedin: '',
+            github: '',
+            twitter: '',
+            facebook: '',
+            instagram: '',
+            website: '',
+          },
+          stats: {
+            yearsOfExperience: 5,
+            projectsCompleted: 12,
+            certificationsEarned: 8,
+            clientsSatisfied: 15,
+          },
+          skills: {
+            technical: [],
+            soft: [],
+          },
+          languages: [],
+          education: [],
+          availability: 'available',
+          updatedAt: new Date().toISOString(),
+        };
+        return NextResponse.json({ profile: defaultProfile });
+      }
       return NextResponse.json({ profile });
     }
 
@@ -135,6 +191,7 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
 
 export async function POST(request: NextRequest, { params }: { params: Promise<{ slug?: string[] }> }) {
   try {
+    if (!hasDatabaseConfig()) return makeConfigError();
     await connectDB();
     const slug = parseSlug((await params).slug);
     const { body, files } = await parseRequestBody(request);
@@ -242,6 +299,7 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
 
 export async function PUT(request: NextRequest, { params }: { params: Promise<{ slug?: string[] }> }) {
   try {
+    if (!hasDatabaseConfig()) return makeConfigError();
     await connectDB();
     const slug = parseSlug((await params).slug);
     const { body, files } = await parseRequestBody(request);
@@ -342,6 +400,7 @@ export async function PUT(request: NextRequest, { params }: { params: Promise<{ 
 
 export async function DELETE(request: NextRequest, { params }: { params: Promise<{ slug?: string[] }> }) {
   try {
+    if (!hasDatabaseConfig()) return makeConfigError();
     await connectDB();
     const slug = parseSlug((await params).slug);
 
