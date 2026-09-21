@@ -6,7 +6,7 @@ import { Plus, Edit2, Trash2, Save, X, Upload, Star } from 'lucide-react'
 import { mutate } from 'swr'
 import Image from 'next/image'
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL?.replace('/api', '') || 'http://localhost:5000'
+const API_URL = process.env.NEXT_PUBLIC_API_URL?.replace('/api', '') || ''
 
 interface ProjectForm {
   title: string

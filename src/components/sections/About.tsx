@@ -6,7 +6,7 @@ import { useMemo, useCallback } from 'react'
 import { useProfile } from '@/hooks/useData'
 import { Calendar, MapPin, Book, GraduationCap, Mail, Phone } from 'lucide-react'
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL?.replace('/api', '') || 'http://localhost:5000'
+const API_URL = process.env.NEXT_PUBLIC_API_URL?.replace('/api', '') || ''
 
 export function About() {
   const [ref, inView] = useInView({

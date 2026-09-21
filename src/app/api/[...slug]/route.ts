@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from 'next/server';
 const API_BASE_URL =
   process.env.BACKEND_API_URL ||
   process.env.NEXT_PUBLIC_API_URL ||
-  'http://localhost:5000/api';
+  (process.env.NODE_ENV !== 'production' ? 'http://localhost:5000/api' : '');
 
 function normalizeTarget(request: NextRequest, slug: string[]) {
   const path = slug.length ? `/${slug.join('/')}` : '/';
@@ -12,6 +12,16 @@ function normalizeTarget(request: NextRequest, slug: string[]) {
 }
 
 async function proxyRequest(request: NextRequest, slug: string[]) {
+  if (!API_BASE_URL) {
+    return NextResponse.json(
+      {
+        status: 'error',
+        message: 'Backend API is not configured for this deployment. Set BACKEND_API_URL or NEXT_PUBLIC_API_URL.',
+      },
+      { status: 503 }
+    );
+  }
+
   const targetUrl = normalizeTarget(request, slug);
   const method = request.method;
   const headers = new Headers();

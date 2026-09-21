@@ -2,8 +2,7 @@ import axios from 'axios';
 import type { Profile, Project, Skill, Experience, Achievement, Video, Service, AuthResponse } from '@/types';
 
 const API_URL =
-  process.env.NEXT_PUBLIC_API_URL?.trim() ||
-  (typeof window !== 'undefined' ? '/api' : 'http://localhost:5000/api');
+  process.env.NEXT_PUBLIC_API_URL?.trim() || '/api';
 
 // Create axios instance
 const api = axios.create({

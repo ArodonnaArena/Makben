@@ -4,7 +4,7 @@ import Image from 'next/image'
 import { useProfile } from '@/hooks/useData'
 import { Github, Linkedin, Mail, ExternalLink, ArrowDown, Zap } from 'lucide-react'
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL?.replace('/api', '') || 'http://localhost:5000'
+const API_URL = process.env.NEXT_PUBLIC_API_URL?.replace('/api', '') || ''
 
 const socialButtonClass =
   "w-12 h-12 rounded-full glass flex items-center justify-center text-ink-100 hover:text-white hover:border-primary-400/60 hover:shadow-glow transition-all"

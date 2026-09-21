@@ -6,7 +6,7 @@ import { useState } from 'react'
 import { useProjects } from '@/hooks/useData'
 import { ProjectCardSkeleton } from '../ui/LoadingSkeleton'
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL?.replace('/api', '') || 'http://localhost:5000'
+const API_URL = process.env.NEXT_PUBLIC_API_URL?.replace('/api', '') || ''
 
 const categories = ['All', 'UI/UX', 'Branding', 'Apps', 'Web']
 

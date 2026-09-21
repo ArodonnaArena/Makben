@@ -6,7 +6,7 @@ import { useVideos } from '@/hooks/useData'
 import { Play, X, Eye, Calendar, Tag } from 'lucide-react'
 import Image from 'next/image'
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL?.replace('/api', '') || 'http://localhost:5000'
+const API_URL = process.env.NEXT_PUBLIC_API_URL?.replace('/api', '') || ''
 
 export function VideoGallery() {
   const [ref, inView] = useInView({

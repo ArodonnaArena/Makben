@@ -5,7 +5,7 @@ import Image from 'next/image'
 import { useAchievements } from '@/hooks/useData'
 import { AchievementCardSkeleton } from '../ui/LoadingSkeleton'
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL?.replace('/api', '') || 'http://localhost:5000'
+const API_URL = process.env.NEXT_PUBLIC_API_URL?.replace('/api', '') || ''
 
 export function Achievements() {
   const [ref, inView] = useInView({
